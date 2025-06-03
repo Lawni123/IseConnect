@@ -75,7 +75,8 @@ if (session.getAttribute("email") == null) {
 				</div>
 				<div class="col-md-6">
 					<label for="email" class="form-label">Email</label> <input
-						type="email" class="form-control" value="<%=session.getAttribute("email") %>" name="email" disabled>
+						type="email" class="form-control" value="<%=session.getAttribute("email") %>" name="mail" disabled>
+						<input type="hidden" value="<%=session.getAttribute("email")%>" name="email">
 				</div>
 				<div class="col-md-6">
 					<label for="password" class="form-label">Password</label> <input

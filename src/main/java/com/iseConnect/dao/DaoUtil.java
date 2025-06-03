@@ -5,10 +5,10 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DaoUtil {
-    public Connection getConnection() {
-        String url = "jdbc:postgresql://dpg-d00k1iali9vc73a0eve0-a.oregon-postgres.render.com/ise_connect";
-        String username = "ise_connect_user";
-        String password = "t9WCQuEAhfPFbmr72QMpg8kzclJmvmGO";
+    public  Connection getConnection() {
+    	String url = "jdbc:postgresql://iseconnect-lawnilaxmikant07-0da0.g.aivencloud.com:24633/defaultdb?sslmode=require";
+        String username = "avnadmin";
+        String password = "AVNS_lH5FJvpJ2dDKvjXOPRq";
         
         try {
             // Correct driver for PostgreSQL

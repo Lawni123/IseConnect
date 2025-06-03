@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="com.iseConnect.model.User" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -74,6 +75,7 @@ response.setHeader("Expires", "0"); // Proxies
 if (session.getAttribute("name") == null) {
     response.sendRedirect("index.html");
 }
+User user = (User)session.getAttribute("user");
 %>
 
 <body class="d-flex flex-column min-vh-100">
@@ -96,9 +98,15 @@ if (session.getAttribute("name") == null) {
 
     <div class="collapse navbar-collapse justify-content-end" id="navbarContent">
       <ul class="navbar-nav mb-2 mb-lg-0 align-items-center">
-        <li class="nav-item">
-          <a class="nav-link text-white" href="#">NPTEL Certification</a>
+        <%if(user.getName().equals("Admin")){ %>
+         <li class="nav-item">
+          <a class="nav-link text-white" href="ViewNptel.jsp">NPTEL Certification</a>
         </li>
+        <%}else{ %>
+        <li class="nav-item">
+          <a class="nav-link text-white" href="nptelInput.jsp">NPTEL Certification</a>
+        </li>
+        <%}%>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button"
             data-bs-toggle="dropdown" aria-expanded="false">

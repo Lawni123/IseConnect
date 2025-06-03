@@ -80,9 +80,12 @@ public class LoginDAO {
                 preparedStatement.setString(1, mail); 
 
                 resultSet = preparedStatement.executeQuery();
-
+                String s = null;
+                if(designation.equals("students"))s="student";
+                else s="faculty";
                 if(resultSet.next()) {
                 	user.setName(resultSet.getString("name"));
+                	user.setId(resultSet.getInt(s+"_id"));
                     user.setEmail(mail);
                     user.setMobile(Long.parseLong(resultSet.getString("mobile")));
                     user.setDesignation(designation);
