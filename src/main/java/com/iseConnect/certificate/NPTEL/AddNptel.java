@@ -5,7 +5,6 @@ import com.google.api.services.drive.Drive;
 import com.google.api.services.drive.model.File;
 import com.iseConnect.model.User;
 
-import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
@@ -26,6 +25,7 @@ public class AddNptel extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private static final String DRIVE_FOLDER_ID = "1g90tICxGT7gpoQ2Xp5Z5_usk0dEFKRhd";
 
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
@@ -33,7 +33,8 @@ public class AddNptel extends HttpServlet {
         User user = (User) session.getAttribute("user");
 
         if (user == null) {
-            response.sendRedirect(user.getDesignation() + "Login.jsp");
+            // Redirect to login page if user is not logged in
+            response.sendRedirect("Login.jsp");
             return;
         }
 
@@ -42,7 +43,8 @@ public class AddNptel extends HttpServlet {
             String courseDuration = request.getParameter("courseDuration");
             Part certificatePart = request.getPart("certificate");
 
-            String certificateUrl = uploadFileToDrive(certificatePart, getServletContext());
+            // Call updated upload method without ServletContext parameter
+            String certificateUrl = uploadFileToDrive(certificatePart);
 
             NptelDao nptelDao = new NptelDao();
             boolean success = nptelDao.AddNptel(
@@ -62,13 +64,13 @@ public class AddNptel extends HttpServlet {
         }
     }
 
-    private String uploadFileToDrive(Part filePart, ServletContext context)
+    private String uploadFileToDrive(Part filePart)
             throws IOException, GeneralSecurityException {
         if (filePart == null || filePart.getSize() == 0) {
             throw new IOException("No file uploaded");
         }
 
-        Drive driveService = GoogleDriveUtils.getDriveService(context);
+        Drive driveService = GoogleDriveUtils.getDriveService();
 
         File fileMetadata = new File();
         fileMetadata.setName(filePart.getSubmittedFileName());
