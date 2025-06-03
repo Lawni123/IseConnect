@@ -26,7 +26,7 @@ public class GoogleDriveUtils {
      * decodes it, and uses it to authenticate.
      */
     public static Drive getDriveService() throws IOException, GeneralSecurityException {
-        String base64Credentials = System.getenv("GOOGLE_SERVICE_ACCOUNT_KEY_BASE64");
+        String base64Credentials = System.getenv("GOOGLE_APPLICATION_CREDENTIALS_BASE64");
         if (base64Credentials == null || base64Credentials.isEmpty()) {
             throw new IOException("Environment variable GOOGLE_SERVICE_ACCOUNT_KEY_BASE64 not set or empty.");
         }
