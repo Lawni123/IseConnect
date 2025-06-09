@@ -1,12 +1,16 @@
-com\iseConnect\admin\nptel\NptelViewDao.class
 com\iseConnect\dao\DaoUtil.class
+com\iseConnect\admin\Event\AddEvent.class
+com\iseConnect\admin\Event\GetEventDao.class
 com\iseConnect\authentication\login\Logout.class
+com\iseConnect\model\Event.class
+com\iseConnect\admin\Event\AddEventDAO.class
 com\iseConnect\authentication\signUp\SignUpDAO.class
 com\iseConnect\certificate\NPTEL\NptelDao.class
 com\iseConnect\model\NptelCertification.class
 com\iseConnect\authentication\login\Login.class
 com\iseConnect\authentication\signUp\SignUp.class
 com\iseConnect\certificate\NPTEL\AddNptel.class
+com\iseConnect\admin\nptel\CertificateViewDao.class
 com\iseConnect\admin\nptel\ViewNptel.class
 com\iseConnect\authentication\login\LoginDAO.class
 com\iseConnect\certificate\NPTEL\GoogleDriveUtils.class

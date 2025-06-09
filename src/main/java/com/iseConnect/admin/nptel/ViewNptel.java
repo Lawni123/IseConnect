@@ -25,15 +25,22 @@ public class ViewNptel extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String designation = request.getParameter("designation");
+        String type = request.getParameter("type");
+
         LocalDate startDate = LocalDate.parse(request.getParameter("startDate"));
         LocalDate endDate = LocalDate.parse(request.getParameter("endDate"));
         
         try {
-            NptelViewDao dao = new NptelViewDao();
-            List<NptelCertification> certifications = dao.getNptelCertifications(designation, startDate, endDate);
+        	CertificateViewDao dao = new CertificateViewDao();
+            List<NptelCertification> certifications = dao.getNptelCertifications(designation, startDate, endDate,type);
             HttpSession session = request.getSession();
             session.setAttribute("certifications", certifications);
+            if(type.equals("nptel"))
             response.sendRedirect("ViewNptel.jsp");
+            else if(type.equals("fdp"))
+                response.sendRedirect("viewFdp.jsp");
+            else
+            	 response.sendRedirect("ViewEvent.jsp");
         } catch (Exception e) {
             e.printStackTrace();
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);

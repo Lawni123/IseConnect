@@ -68,9 +68,10 @@ response.setHeader("Cache-Control", "no-cache,no-store,must-revalidate");
 response.setHeader("Pragma", "no-cache"); // HTTP 1.0
 response.setHeader("Expires", "0"); // Proxies
 
-if (session.getAttribute("name") == null) {
+if (session.getAttribute("name") == "Admin") {
     response.sendRedirect("AdminPanelLoginPage.jsp");
 }
+
 %>
 <body class="d-flex flex-column min-vh-100">
     <nav class="navbar navbar-expand-lg" style="background-color: var(--blue-dark);">
@@ -106,6 +107,7 @@ if (session.getAttribute("name") == null) {
                         <option value="Students">Student</option>
                         <option value="Faculty">Faculty</option>
                     </select>
+                    <input type="hidden" name="type" value="nptel">
                 </div>
                 <div class="mb-3">
                     <label for="startDate" class="form-label">Start Date</label>
@@ -131,9 +133,11 @@ if (session.getAttribute("name") == null) {
                     <thead>
                         <tr>
                             <th>Name</th>
+                            <%if(certifications.get(0).getUsn()!=null){ %>
                             <th>USN</th>
+                            <%}%>
                             <th>Course Name</th>
-                            <th>Course Duration</th>
+                            <th>Course Duration(In Weeks)</th>
                             <th>Certificate URL</th>
                         </tr>
                     </thead>
@@ -143,7 +147,9 @@ if (session.getAttribute("name") == null) {
                         %>
                         <tr>
                             <td><%= cert.getUserName() %></td>
+                            <%if(cert.getUsn() != null){ %>
                             <td><%= cert.getUsn() != null ? cert.getUsn() : "N/A" %></td>
+                            <%} %>
                             <td><%= cert.getCourseName() %></td>
                             <td><%= cert.getCourseDuration() %></td>
                             <td><a href="<%= cert.getCertificateUrl() %>" target="_blank">View Certificate</a></td>
@@ -168,44 +174,46 @@ if (session.getAttribute("name") == null) {
 
 
 <script>
-    function validateForm() {
-        const designation = document.getElementById("designation").value;
-        const startDate = document.getElementById("startDate").value;
-        const endDate = document.getElementById("endDate").value;
-        const today = new Date().toISOString().split("T")[0]; // Today's date in YYYY-MM-DD format
+function validateForm() {
+    const designation = document.getElementById("designation").value;
+    const startDate = document.getElementById("startDate").value;
+    const endDate = document.getElementById("endDate").value;
+    const today = new Date().toLocaleDateString('en-CA'); // Use local date
 
-        if (designation === "") {
-            alert("Please select a designation.");
-            return false;
-        }
-
-        if (startDate === "") {
-            alert("Please select a start date.");
-            return false;
-        }
-
-        if (endDate === "") {
-            alert("Please select an end date.");
-            return false;
-        }
-
-        if (startDate > today) {
-            alert("Start date cannot be in the future.");
-            return false;
-        }
-
-        if (endDate > today) {
-            alert("End date cannot be in the future.");
-            return false;
-        }
-
-        if (startDate > endDate) {
-            alert("Start date cannot be later than end date.");
-            return false;
-        }
-
-        return true;
+    if (designation === "") {
+        alert("Please select a designation.");
+        return false;
     }
+
+    if (startDate === "") {
+        alert("Please select a start date.");
+        return false;
+    }
+
+    if (endDate === "") {
+        alert("Please select an end date.");
+        return false;
+    }
+
+    if (startDate > today) {
+        alert("Start date cannot be in the future.");
+        return false;
+    }
+
+    if (endDate > today) {
+        alert("End date cannot be in the future.");
+        return false;
+    }
+
+    if (startDate > endDate) {
+        alert("Start date cannot be later than end date.");
+        return false;
+    }
+
+    return true;
+}
+
+    
 </script>
 	
     <!-- Bootstrap JS -->

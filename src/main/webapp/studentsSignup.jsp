@@ -22,6 +22,11 @@
     .btn-custom:hover { background-color: #194a75; color: white; }
   </style>
 </head>
+<%
+	if(session.getAttribute("email")==null){
+		response.sendRedirect("verifyEmail.jsp");
+	}
+%>
 <body>
   <header class="header">ISE CONNECT</header>
 

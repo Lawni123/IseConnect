@@ -116,6 +116,7 @@ if (session.getAttribute("name") == null) {
           <h4 class="text-center mb-4 form-heading">Add NPTEL Certification</h4>
           <form id="nptelForm" action="AddNptel" method="POST" enctype="multipart/form-data">
             <div class="mb-3">
+              <input type="hidden" value="nptel" name="type">
               <label for="courseName" class="form-label">Course Name</label>
               <input type="text" class="form-control" id="courseName" name="courseName" placeholder="Enter Course Name" required>
             </div>

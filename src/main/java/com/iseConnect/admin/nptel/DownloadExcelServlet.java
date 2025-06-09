@@ -42,7 +42,15 @@ public class DownloadExcelServlet extends HttpServlet {
 
             // Create the header row
             Row headerRow = sheet.createRow(0);
-            String[] headers = {"User Name", "USN", "Course Name", "Course Duration", "Certificate URL"};
+            String[] headers= {};
+            if(certifications.get(0).getUsn()==null){
+            String[] headers1= {"User Name", "Course Name", "Course Duration", "Certificate URL"};
+            headers=headers1;
+            }else {
+            	 String[] headers1= {"User Name", "USN", "Course Name", "Course Duration", "Certificate URL"};
+            	 headers=headers1;
+            }
+            
             for (int i = 0; i < headers.length; i++) {
                 Cell cell = headerRow.createCell(i);
                 cell.setCellValue(headers[i]);
@@ -58,10 +66,17 @@ public class DownloadExcelServlet extends HttpServlet {
             for (NptelCertification cert : certifications) {
                 Row row = sheet.createRow(rowIndex++);
                 row.createCell(0).setCellValue(cert.getUserName());
+                if(cert.getUsn() != null) {
                 row.createCell(1).setCellValue(cert.getUsn() != null ? cert.getUsn() : "N/A");
                 row.createCell(2).setCellValue(cert.getCourseName());
                 row.createCell(3).setCellValue(cert.getCourseDuration());
                 row.createCell(4).setCellValue(cert.getCertificateUrl());
+                }else {
+                	row.createCell(1).setCellValue(cert.getCourseName());
+                    row.createCell(2).setCellValue(cert.getCourseDuration());
+                    row.createCell(3).setCellValue(cert.getCertificateUrl());
+                }
+                
             }
 
             // Autosize columns

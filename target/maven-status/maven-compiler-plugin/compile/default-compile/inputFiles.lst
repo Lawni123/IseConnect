@@ -1,5 +1,8 @@
+D:\MainProject\IseConnect\src\main\java\com\iseConnect\admin\Event\AddEvent.java
+D:\MainProject\IseConnect\src\main\java\com\iseConnect\admin\Event\AddEventDAO.java
+D:\MainProject\IseConnect\src\main\java\com\iseConnect\admin\Event\GetEventDao.java
+D:\MainProject\IseConnect\src\main\java\com\iseConnect\admin\nptel\CertificateViewDao.java
 D:\MainProject\IseConnect\src\main\java\com\iseConnect\admin\nptel\DownloadExcelServlet.java
-D:\MainProject\IseConnect\src\main\java\com\iseConnect\admin\nptel\NptelViewDao.java
 D:\MainProject\IseConnect\src\main\java\com\iseConnect\admin\nptel\ViewNptel.java
 D:\MainProject\IseConnect\src\main\java\com\iseConnect\authentication\forgotPassword\ForgotPassword.java
 D:\MainProject\IseConnect\src\main\java\com\iseConnect\authentication\forgotPassword\ForgotPasswordDAO.java
@@ -15,5 +18,6 @@ D:\MainProject\IseConnect\src\main\java\com\iseConnect\certificate\NPTEL\AddNpte
 D:\MainProject\IseConnect\src\main\java\com\iseConnect\certificate\NPTEL\GoogleDriveUtils.java
 D:\MainProject\IseConnect\src\main\java\com\iseConnect\certificate\NPTEL\NptelDao.java
 D:\MainProject\IseConnect\src\main\java\com\iseConnect\dao\DaoUtil.java
+D:\MainProject\IseConnect\src\main\java\com\iseConnect\model\Event.java
 D:\MainProject\IseConnect\src\main\java\com\iseConnect\model\NptelCertification.java
 D:\MainProject\IseConnect\src\main\java\com\iseConnect\model\User.java

@@ -1,6 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="com.iseConnect.model.User" %>
+<%@ page import="com.iseConnect.model.Event" %>
+<%@ page import="java.util.List" %>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -43,7 +45,7 @@
 
     .carousel-inner img {
       width: 80%;
-      height: 450px;
+      height: 610px;
       object-fit: cover;
     }
 
@@ -64,6 +66,35 @@
     .dropdown-menu a {
       color: var(--blue-dark) !important;
     }
+
+    /* News Scrolling */
+    .news-scroll {
+      height: 160px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .news-scroll .scroll-content {
+      position: absolute;
+      animation: scrollUp 10s linear infinite;
+    }
+
+    .news-scroll:hover .scroll-content {
+      animation-play-state: paused;
+    }
+
+    @keyframes scrollUp {
+      0% {
+        top: 100%;
+      }
+      100% {
+        top: -100%;
+      }
+    }
+    .quk{
+          height: 160px;
+    
+    }
   </style>
 </head>
 
@@ -76,53 +107,52 @@ if (session.getAttribute("name") == null) {
     response.sendRedirect("index.html");
 }
 User user = (User)session.getAttribute("user");
+List<Event> eventList = (List<Event>) session.getAttribute("eventList");
 %>
 
 <body class="d-flex flex-column min-vh-100">
 
-  <!-- Header -->
- <!-- Responsive Navbar Header -->
-<nav class="navbar navbar-expand-lg" style="background-color: var(--blue-dark);">
-  <div class="container-fluid">
-    <a class="navbar-brand text-white fw-bold me-3" href="#">ISE CONNECT</a>
-    
-    <!-- Username Display -->
-     <span class="text-white fw-semibold d-none d-sm-inline">
-      Welcome, <%= session.getAttribute("name") %>
-    </span>
+  <!-- Navbar Header -->
+  <nav class="navbar navbar-expand-lg" style="background-color: var(--blue-dark);">
+    <div class="container-fluid">
+      <a class="navbar-brand text-white fw-bold me-3" href="#">ISE CONNECT</a>
+      <span class="text-white fw-semibold d-none d-sm-inline">
+        Welcome, <%= session.getAttribute("name") %>
+      </span>
 
-    <button class="navbar-toggler text-white ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent"
-      aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon" style="filter: invert(1);"></span>
-    </button>
+      <button class="navbar-toggler text-white ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent"
+        aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon" style="filter: invert(1);"></span>
+      </button>
 
-    <div class="collapse navbar-collapse justify-content-end" id="navbarContent">
-      <ul class="navbar-nav mb-2 mb-lg-0 align-items-center">
-        <%if(user.getName().equals("Admin")){ %>
-         <li class="nav-item">
-          <a class="nav-link text-white" href="ViewNptel.jsp">NPTEL Certification</a>
-        </li>
-        <%}else{ %>
-        <li class="nav-item">
-          <a class="nav-link text-white" href="nptelInput.jsp">NPTEL Certification</a>
-        </li>
-        <%}%>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button"
-            data-bs-toggle="dropdown" aria-expanded="false">
-            Profile
-          </a>
-          <ul class="dropdown-menu dropdown-menu-end">
-            <li><a class="dropdown-item" href="#">Edit Profile</a></li>
-            <li><a class="dropdown-item" href="Logout">Logout</a></li>
-          </ul>
-        </li>
-      </ul>
+      <div class="collapse navbar-collapse justify-content-end" id="navbarContent">
+        <ul class="navbar-nav mb-2 mb-lg-0 align-items-center">
+          <% if (user.getName().equals("Admin")) { %>
+            <li class="nav-item"><a class="nav-link text-white" href="ViewNptel.jsp">NPTEL Certification</a></li>
+            <li class="nav-item"><a class="nav-link text-white" href="viewFdp.jsp">FDP Certification</a></li>
+            <li class="nav-item"><a class="nav-link text-white" href="ViewEvent.jsp">Events Certification</a></li>
+            
+            <li class="nav-item"><a class="nav-link text-white" href="addEvent.jsp">Add Events</a></li>
+          <% } else if (user.getDesignation().equals("faculty")) { %>
+            <li class="nav-item"><a class="nav-link text-white" href="nptelInput.jsp">NPTEL Certification</a></li>
+            <li class="nav-item"><a class="nav-link text-white" href="fdpInput.jsp">FDP Certification</a></li>
+            <li class="nav-item"><a class="nav-link text-white" href="eventInput.jsp">Event Certification</a></li>
+          <% } else  { %>
+            <li class="nav-item"><a class="nav-link text-white" href="nptelInput.jsp">NPTEL Certification</a></li>
+            <li class="nav-item"><a class="nav-link text-white" href="eventInput.jsp">Event Certification</a></li>
+          <% } %>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button"
+              data-bs-toggle="dropdown" aria-expanded="false">Profile</a>
+            <ul class="dropdown-menu dropdown-menu-end">
+              <li><a class="dropdown-item" href="#">Edit Profile</a></li>
+              <li><a class="dropdown-item" href="Logout">Logout</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
     </div>
-  </div>
-</nav>
-
-
+  </nav>
 
   <!-- Carousel -->
   <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
@@ -130,7 +160,6 @@ User user = (User)session.getAttribute("user");
       <div class="carousel-item active">
         <img src="pics\\PDACEK.jpg" class="d-block w-100" alt="Image 1">
       </div>
-     
     </div>
     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
       <span class="carousel-control-prev-icon"></span>
@@ -143,15 +172,17 @@ User user = (User)session.getAttribute("user");
   <!-- News & Quick Links -->
   <div class="container my-5">
     <div class="row">
-      <!-- News & Events -->
+      <!-- News & Events with Scroll -->
       <div class="col-md-6">
         <div class="section-block">
           <h5 class="news-title">News & Events</h5>
-          <ul class="list-unstyled">
-            <li>• Upcoming hackathon on April 20</li>
-            <li>• Guest Lecture on AI - April 25</li>
-            <li>• Internal Exams from May 1</li>
-          </ul>
+          <div class="scroll-container news-scroll">
+            <ul class="list-unstyled scroll-content">
+              <%for(Event event:eventList) {%>
+                <li><a href ="<%=event.getEventUrl()%>"><%=event.getEventName() %>[Date:<%=event.getEventDate() %>]</a></li>
+              <%} %>
+            </ul>
+          </div>
         </div>
       </div>
 
@@ -159,11 +190,14 @@ User user = (User)session.getAttribute("user");
       <div class="col-md-6">
         <div class="section-block">
           <h5 class="quick-links-title">Quick Links</h5>
+          <div class="quk">
           <ul class="list-unstyled">
-            <li><a href="#" class="text-decoration-none">Submit NPTEL Certifications</a></li>
-            <li><a href="#" class="text-decoration-none">Academic Calendar</a></li>
-            <li><a href="#" class="text-decoration-none">Course Materials</a></li>
+            <li><a href="nptelInput.jsp" class="text-decoration-none">Submit NPTEL Certifications</a></li>
+            <% if (user.getDesignation().equals("faculty")) { %>
+            <li><a href="nptelInput.jsp" class="text-decoration-none">Submit FDP Certifications</a></li>
+            <%} %>
           </ul>
+          </div>
         </div>
       </div>
     </div>
@@ -180,4 +214,3 @@ User user = (User)session.getAttribute("user");
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
-    

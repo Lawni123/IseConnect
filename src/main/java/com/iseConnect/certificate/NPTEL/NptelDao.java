@@ -7,10 +7,10 @@ import java.sql.SQLException;
 import com.iseConnect.dao.DaoUtil;
 
 public class NptelDao {
-	boolean AddNptel(int userId, String designation, String courseName, String courseDuration, String certificateUrl) {
+	boolean AddNptel(int userId, String designation, String courseName, String courseDuration, String certificateUrl,String type) {
         
 		DaoUtil daoObj = new DaoUtil();
-        String query = "INSERT INTO nptel_certifications (user_id, designation, course_name, course_duration, certificate_url) VALUES (?, ?, ?, ?, ?)";
+        String query = "INSERT INTO certifications (user_id, designation, course_name, course_duration, certificate_url,certification_name) VALUES (?, ?, ?, ?, ?,?)";
         Connection conn = daoObj.getConnection();
         try (
              PreparedStatement pstmt = conn.prepareStatement(query)) {
@@ -20,7 +20,7 @@ public class NptelDao {
             pstmt.setString(3, courseName);
             pstmt.setString(4, courseDuration);
             pstmt.setString(5, certificateUrl);
-
+            pstmt.setString(6, type);
             if(pstmt.executeUpdate()<=0) {
             	return false;
             }

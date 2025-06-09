@@ -37,9 +37,10 @@ public class AddNptel extends HttpServlet {
             response.sendRedirect("Login.jsp");
             return;
         }
-
+        String type = null;
         try {
             String courseName = request.getParameter("courseName");
+            type= request.getParameter("type");
             String courseDuration = request.getParameter("courseDuration");
             Part certificatePart = request.getPart("certificate");
 
@@ -52,15 +53,16 @@ public class AddNptel extends HttpServlet {
                     user.getDesignation(),
                     courseName,
                     courseDuration,
-                    certificateUrl
+                    certificateUrl,
+                    type
             );
 
             setSessionMessage(session, success);
-            response.sendRedirect("nptelInput.jsp");
+            response.sendRedirect(type+"Input.jsp");
 
         } catch (Exception e) {
             handleError(session, e);
-            response.sendRedirect("nptelInput.jsp");
+            response.sendRedirect(type+"Input.jsp");
         }
     }
 
